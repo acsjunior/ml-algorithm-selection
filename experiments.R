@@ -35,8 +35,6 @@ df_final <- NULL
 # --------------------------------------------------------------------------
 # Logistic regression:
 
-model_label <- "rlog"
-
 set.seed(SEED)
 rlog_model <- caret::train(form = y ~ .,
                data = df,
@@ -57,18 +55,21 @@ fp <- cm$table[2]
 fn <- cm$table[3]
 tp <- cm$table[4]
 
+model_label <- "rlog"
 values <- data.frame(tn, tp, fn, fp)
 folds <- data.frame(n_folds)
+auc <- data.frame(auc)
 avg_time <- data.frame(time)
 metrics1 <- t(as.data.frame(cm$overall))
 metrics2 <- t(as.data.frame(cm$byClass))
 row.names(values) <- model_label
 row.names(folds) <- model_label
+row.names(auc) <- model_label
 row.names(avg_time) <- model_label
 row.names(metrics1) <- model_label
 row.names(metrics2) <- model_label
 
-concat <- cbind(values, folds, avg_time, metrics1, metrics2)
+concat <- cbind(values, folds, auc, avg_time, metrics1, metrics2)
 
 if (is.null(df_final)) {
   df_final <- concat
@@ -79,8 +80,6 @@ if (is.null(df_final)) {
 # --------------------------------------------------------------------------
 # Random forest:
 
-
-model_label <- "rfor"
 
 set.seed(SEED)
 rfor_model <- caret::train(form = y ~ .,
@@ -100,18 +99,26 @@ fp <- cm$table[2]
 fn <- cm$table[3]
 tp <- cm$table[4]
 
+tn <- cm$table[1]
+fp <- cm$table[2]
+fn <- cm$table[3]
+tp <- cm$table[4]
+
+model_label <- "rfor"
 values <- data.frame(tn, tp, fn, fp)
 folds <- data.frame(n_folds)
+auc <- data.frame(auc)
 avg_time <- data.frame(time)
 metrics1 <- t(as.data.frame(cm$overall))
 metrics2 <- t(as.data.frame(cm$byClass))
 row.names(values) <- model_label
 row.names(folds) <- model_label
+row.names(auc) <- model_label
 row.names(avg_time) <- model_label
 row.names(metrics1) <- model_label
 row.names(metrics2) <- model_label
 
-concat <- cbind(values, folds, avg_time, metrics1, metrics2)
+concat <- cbind(values, folds, auc, avg_time, metrics1, metrics2)
 
 if (is.null(df_final)) {
   df_final <- concat
@@ -122,8 +129,6 @@ if (is.null(df_final)) {
 # --------------------------------------------------------------------------
 # Gradient Boosting Machine Estocástico
 
-
-model_label <- "gbm"
 
 set.seed(SEED)
 gbm_model <- caret::train(form = y ~ .,
@@ -144,18 +149,21 @@ fp <- cm$table[2]
 fn <- cm$table[3]
 tp <- cm$table[4]
 
+model_label <- "gbm"
 values <- data.frame(tn, tp, fn, fp)
 folds <- data.frame(n_folds)
+auc <- data.frame(auc)
 avg_time <- data.frame(time)
 metrics1 <- t(as.data.frame(cm$overall))
 metrics2 <- t(as.data.frame(cm$byClass))
 row.names(values) <- model_label
 row.names(folds) <- model_label
+row.names(auc) <- model_label
 row.names(avg_time) <- model_label
 row.names(metrics1) <- model_label
 row.names(metrics2) <- model_label
 
-concat <- cbind(values, folds, avg_time, metrics1, metrics2)
+concat <- cbind(values, folds, auc, avg_time, metrics1, metrics2)
 
 if (is.null(df_final)) {
   df_final <- concat
@@ -167,8 +175,6 @@ if (is.null(df_final)) {
 # --------------------------------------------------------------------------
 # XG Boost
 
-
-model_label <- "xgb"
 
 set.seed(SEED)
 xgb_model <- caret::train(form = y ~ .,
@@ -189,18 +195,21 @@ fp <- cm$table[2]
 fn <- cm$table[3]
 tp <- cm$table[4]
 
+model_label <- "xgb"
 values <- data.frame(tn, tp, fn, fp)
 folds <- data.frame(n_folds)
+auc <- data.frame(auc)
 avg_time <- data.frame(time)
 metrics1 <- t(as.data.frame(cm$overall))
 metrics2 <- t(as.data.frame(cm$byClass))
 row.names(values) <- model_label
 row.names(folds) <- model_label
+row.names(auc) <- model_label
 row.names(avg_time) <- model_label
 row.names(metrics1) <- model_label
 row.names(metrics2) <- model_label
 
-concat <- cbind(values, folds, avg_time, metrics1, metrics2)
+concat <- cbind(values, folds, auc, avg_time, metrics1, metrics2)
 
 if (is.null(df_final)) {
   df_final <- concat
@@ -213,8 +222,6 @@ if (is.null(df_final)) {
 # --------------------------------------------------------------------------
 # Multi Layer Perceptron
 
-
-model_label <- "mlp"
 
 set.seed(SEED)
 mlp_model <- caret::train(form = y ~ .,
@@ -234,18 +241,21 @@ fp <- cm$table[2]
 fn <- cm$table[3]
 tp <- cm$table[4]
 
+model_label <- "mlp"
 values <- data.frame(tn, tp, fn, fp)
 folds <- data.frame(n_folds)
+auc <- data.frame(auc)
 avg_time <- data.frame(time)
 metrics1 <- t(as.data.frame(cm$overall))
 metrics2 <- t(as.data.frame(cm$byClass))
 row.names(values) <- model_label
 row.names(folds) <- model_label
+row.names(auc) <- model_label
 row.names(avg_time) <- model_label
 row.names(metrics1) <- model_label
 row.names(metrics2) <- model_label
 
-concat <- cbind(values, folds, avg_time, metrics1, metrics2)
+concat <- cbind(values, folds, auc, avg_time, metrics1, metrics2)
 
 if (is.null(df_final)) {
   df_final <- concat
@@ -257,8 +267,6 @@ if (is.null(df_final)) {
 # --------------------------------------------------------------------------
 # LDA
 
-
-model_label <- "lda"
 
 set.seed(SEED)
 lda_model <- caret::train(form = y ~ .,
@@ -278,18 +286,21 @@ fp <- cm$table[2]
 fn <- cm$table[3]
 tp <- cm$table[4]
 
+model_label <- "lda"
 values <- data.frame(tn, tp, fn, fp)
 folds <- data.frame(n_folds)
+auc <- data.frame(auc)
 avg_time <- data.frame(time)
 metrics1 <- t(as.data.frame(cm$overall))
 metrics2 <- t(as.data.frame(cm$byClass))
 row.names(values) <- model_label
 row.names(folds) <- model_label
+row.names(auc) <- model_label
 row.names(avg_time) <- model_label
 row.names(metrics1) <- model_label
 row.names(metrics2) <- model_label
 
-concat <- cbind(values, folds, avg_time, metrics1, metrics2)
+concat <- cbind(values, folds, auc, avg_time, metrics1, metrics2)
 
 if (is.null(df_final)) {
   df_final <- concat
@@ -301,8 +312,6 @@ if (is.null(df_final)) {
 # --------------------------------------------------------------------------
 # KNN
 
-
-model_label <- "knn"
 
 set.seed(SEED)
 knn_model <- caret::train(form = y ~ .,
@@ -322,18 +331,21 @@ fp <- cm$table[2]
 fn <- cm$table[3]
 tp <- cm$table[4]
 
+model_label <- "knn"
 values <- data.frame(tn, tp, fn, fp)
 folds <- data.frame(n_folds)
+auc <- data.frame(auc)
 avg_time <- data.frame(time)
 metrics1 <- t(as.data.frame(cm$overall))
 metrics2 <- t(as.data.frame(cm$byClass))
 row.names(values) <- model_label
 row.names(folds) <- model_label
+row.names(auc) <- model_label
 row.names(avg_time) <- model_label
 row.names(metrics1) <- model_label
 row.names(metrics2) <- model_label
 
-concat <- cbind(values, folds, avg_time, metrics1, metrics2)
+concat <- cbind(values, folds, auc, avg_time, metrics1, metrics2)
 
 if (is.null(df_final)) {
   df_final <- concat
@@ -345,8 +357,6 @@ if (is.null(df_final)) {
 # --------------------------------------------------------------------------
 # SVM Radial
 
-
-model_label <- "svm"
 
 set.seed(SEED)
 svm_model <- caret::train(form = y ~ .,
@@ -366,18 +376,21 @@ fp <- cm$table[2]
 fn <- cm$table[3]
 tp <- cm$table[4]
 
+model_label <- "svm"
 values <- data.frame(tn, tp, fn, fp)
 folds <- data.frame(n_folds)
+auc <- data.frame(auc)
 avg_time <- data.frame(time)
 metrics1 <- t(as.data.frame(cm$overall))
 metrics2 <- t(as.data.frame(cm$byClass))
 row.names(values) <- model_label
 row.names(folds) <- model_label
+row.names(auc) <- model_label
 row.names(avg_time) <- model_label
 row.names(metrics1) <- model_label
 row.names(metrics2) <- model_label
 
-concat <- cbind(values, folds, avg_time, metrics1, metrics2)
+concat <- cbind(values, folds, auc, avg_time, metrics1, metrics2)
 
 if (is.null(df_final)) {
   df_final <- concat
@@ -389,8 +402,6 @@ if (is.null(df_final)) {
 # --------------------------------------------------------------------------
 # C5.0
 
-
-model_label <- "c50"
 
 set.seed(SEED)
 c50_model <- caret::train(form = y ~ .,
@@ -410,18 +421,21 @@ fp <- cm$table[2]
 fn <- cm$table[3]
 tp <- cm$table[4]
 
+model_label <- "c50"
 values <- data.frame(tn, tp, fn, fp)
 folds <- data.frame(n_folds)
+auc <- data.frame(auc)
 avg_time <- data.frame(time)
 metrics1 <- t(as.data.frame(cm$overall))
 metrics2 <- t(as.data.frame(cm$byClass))
 row.names(values) <- model_label
 row.names(folds) <- model_label
+row.names(auc) <- model_label
 row.names(avg_time) <- model_label
 row.names(metrics1) <- model_label
 row.names(metrics2) <- model_label
 
-concat <- cbind(values, folds, avg_time, metrics1, metrics2)
+concat <- cbind(values, folds, auc, avg_time, metrics1, metrics2)
 
 if (is.null(df_final)) {
   df_final <- concat
@@ -429,49 +443,6 @@ if (is.null(df_final)) {
   df_final <- rbind(df_final, concat)
 }
 
-
-# --------------------------------------------------------------------------
-# Ada Boosting M1
-
-
-model_label <- "ada"
-
-set.seed(SEED)
-ada_model <- caret::train(form = y ~ .,
-                          data = df,
-                          method = "AdaBoost.M1",
-                          trControl = train_ctrl)
-
-model <- ada_model
-time <- as.numeric(model$times$everything[1]) / n_folds
-pred <- predict(model)
-cm <- caret::confusionMatrix(data = pred, reference = df$y, positive = "1", mode = "everything")
-rocobj <- roc(as.numeric(as.character(df$y)), as.numeric(as.character(pred)), plot=F, ci=T, ci.sp = T)
-auc <- as.numeric(auc(rocobj))
-
-tn <- cm$table[1]
-fp <- cm$table[2]
-fn <- cm$table[3]
-tp <- cm$table[4]
-
-values <- data.frame(tn, tp, fn, fp)
-folds <- data.frame(n_folds)
-avg_time <- data.frame(time)
-metrics1 <- t(as.data.frame(cm$overall))
-metrics2 <- t(as.data.frame(cm$byClass))
-row.names(values) <- model_label
-row.names(folds) <- model_label
-row.names(avg_time) <- model_label
-row.names(metrics1) <- model_label
-row.names(metrics2) <- model_label
-
-concat <- cbind(values, folds, avg_time, metrics1, metrics2)
-
-if (is.null(df_final)) {
-  df_final <- concat
-} else {
-  df_final <- rbind(df_final, concat)
-}
 
 
 # --------------------------------------------------------------------------
@@ -498,24 +469,28 @@ fp <- cm$table[2]
 fn <- cm$table[3]
 tp <- cm$table[4]
 
+model_label <- "qda"
 values <- data.frame(tn, tp, fn, fp)
 folds <- data.frame(n_folds)
+auc <- data.frame(auc)
 avg_time <- data.frame(time)
 metrics1 <- t(as.data.frame(cm$overall))
 metrics2 <- t(as.data.frame(cm$byClass))
 row.names(values) <- model_label
 row.names(folds) <- model_label
+row.names(auc) <- model_label
 row.names(avg_time) <- model_label
 row.names(metrics1) <- model_label
 row.names(metrics2) <- model_label
 
-concat <- cbind(values, folds, avg_time, metrics1, metrics2)
+concat <- cbind(values, folds, auc, avg_time, metrics1, metrics2)
 
 if (is.null(df_final)) {
   df_final <- concat
 } else {
   df_final <- rbind(df_final, concat)
 }
+
 
 # --------------------------------------------------------------------------
 # Export
